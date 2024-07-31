@@ -18,8 +18,7 @@ class JsonContext implements Context
         protected KernelInterface  $kernel,
         protected ArrayDeepCompare $arrayComp,
         protected State            $state,
-    )
-    {
+    ) {
     }
 
     #[When('I make a :method request with json data to :url')]
