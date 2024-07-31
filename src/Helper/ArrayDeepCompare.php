@@ -66,9 +66,9 @@ class ArrayDeepCompare
                     '%s: (%s) %s != (%s) %s',
                     $path,
                     \gettype($a),
-                    (string)($a ?? ''),
+                    $a ?? '',
                     \gettype($b),
-                    (string)($b ?? '')
+                    $b ?? ''
                 );
 
                 return true;

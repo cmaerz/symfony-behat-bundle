@@ -32,6 +32,7 @@ class ArrayDeepCompareTest extends TestCase
             [['a' => [['b' => 'c', 'd' => 'e']]], /* contains */ ['a' => [['d' => 'e']]]],
             [['apple','banana'], /* contains */ ['banana']],
             [['a' => ['apple','banana']], /* contains */ ['a' => []]],
+            [['a' => ['apple' => [['a' => 'b']]]], /* contains */ ['apple' => [['a' => 'b']]]],
         ];
     }
 

@@ -15,10 +15,11 @@ class JsonContext implements Context
     use RequestTrait;
 
     public function __construct(
-        protected KernelInterface $kernel,
+        protected KernelInterface  $kernel,
         protected ArrayDeepCompare $arrayComp,
-        protected State $state,
-    ) {
+        protected State            $state,
+    )
+    {
     }
 
     #[When('I make a :method request with json data to :url')]
@@ -29,10 +30,10 @@ class JsonContext implements Context
             $rawData = $data->getRaw();
             $server['CONTENT_TYPE'] = 'application/json';
             if (str_contains($rawData, "\n\n")) {
-                [$headers,$rawData] = explode("\n\n", $rawData);
+                [$headers, $rawData] = explode("\n\n", $rawData);
                 foreach (explode("\n", $headers) as $headerRow) {
-                    [$headerKey,$headerValue] = explode(':', $headerRow, 2);
-                    $server['HTTP_'.strtoupper($headerKey)] = trim($headerValue);
+                    [$headerKey, $headerValue] = explode(':', $headerRow, 2);
+                    $server['HTTP_' . strtoupper($headerKey)] = trim($headerValue);
                 }
             }
         }
@@ -84,10 +85,9 @@ class JsonContext implements Context
     {
         try {
             $this->theResponseJsonContains($string);
-        } catch (\DomainException|\JsonException $e) {
-            if ($e instanceof \JsonException) {
-                throw new \JsonException('JSON Syntax Error: ' . $e->getMessage());
-            }
+        } catch (\JsonException $e) {
+            throw new \JsonException('JSON Syntax Error: ' . $e->getMessage());
+        } catch (\DomainException) {
             return;
         }
         throw new \DomainException('the response json contains exact this data');
