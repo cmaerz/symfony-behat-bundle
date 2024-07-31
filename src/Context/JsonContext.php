@@ -84,7 +84,10 @@ class JsonContext implements Context
     {
         try {
             $this->theResponseJsonContains($string);
-        } catch (\DomainException|\JsonException) {
+        } catch (\DomainException|\JsonException $e) {
+            if ($e instanceof \JsonException) {
+                throw new \JsonException('JSON Syntax Error: ' . $e->getMessage());
+            }
             return;
         }
         throw new \DomainException('the response json contains exact this data');
